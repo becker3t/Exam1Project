@@ -1,4 +1,4 @@
-package com.example.android.examproject;
+package com.example.android.examproject.list;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.examproject.R;
 import com.example.android.examproject.entities.UserInfo;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * Created by Android on 6/12/2017.
  */
 
-public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder> {
+public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>{
 
     private ArrayList<UserInfo> userList;
     private Context context;
@@ -29,6 +30,7 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.recycler_item, parent, false);
+//        itemView.setOnClickListener(this);
         return new ViewHolder(itemView);
     }
 
@@ -48,6 +50,11 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
     public int getItemCount() {
         return userList.size();
     }
+
+//    @Override
+//    public void onClick(View v) {
+//        int itemPosition = v.getChildLayoutPosition(view);
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView userNameTv;

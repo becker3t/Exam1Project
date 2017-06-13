@@ -1,4 +1,4 @@
-package com.example.android.examproject;
+package com.example.android.examproject.list;
 
 import com.example.android.examproject.entities.User;
 
@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 
 public interface RetrofitService {
 
-    @GET("api")
-    Call<User> getExampleUser();
+    @GET("api/?results=20")
+    Call<User> getTwentyUsers();
 
 }
