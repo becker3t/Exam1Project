@@ -11,6 +11,10 @@ public class UserInfo {
     private String address;
     private String email;
 
+    //empty constructor for testing
+    public UserInfo() {
+    }
+
     public UserInfo(String image, String name, String address, String email) {
         this.imageUrl = image;
         this.name = name;

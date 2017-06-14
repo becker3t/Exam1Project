@@ -1,4 +1,4 @@
-package com.example.android.examproject.list;
+package com.example.android.examproject.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

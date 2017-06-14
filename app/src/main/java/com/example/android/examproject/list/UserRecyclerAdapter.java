@@ -13,6 +13,7 @@ import com.example.android.examproject.R;
 import com.example.android.examproject.entities.UserInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Android on 6/12/2017.
@@ -20,11 +21,11 @@ import java.util.ArrayList;
 
 public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<UserInfo> userList;
+    private List<UserInfo> userList;
     private Context context;
     private ListItemClickListener listItemClickListener;
 
-    public UserRecyclerAdapter(ArrayList<UserInfo> userList, Context context) {
+    public UserRecyclerAdapter(List<UserInfo> userList, Context context) {
         this.userList = userList;
         this.context = context;
     }

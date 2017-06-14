@@ -1,9 +1,10 @@
-package com.example.android.examproject.list;
+package com.example.android.examproject.data;
 
 import com.example.android.examproject.entities.User;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by Android on 6/12/2017.
@@ -11,7 +12,7 @@ import retrofit2.http.GET;
 
 public interface RetrofitService {
 
-    @GET("api/?results=20")
-    Call<User> getTwentyUsers();
+    @GET("api")
+    Call<User> getUsers(@Query("results") int count);
 
 }

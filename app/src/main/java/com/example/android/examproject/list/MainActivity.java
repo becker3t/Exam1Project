@@ -11,12 +11,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.android.examproject.R;
+import com.example.android.examproject.data.RetrofitService;
 import com.example.android.examproject.details.DetailsActivity;
 import com.example.android.examproject.entities.Result;
 import com.example.android.examproject.entities.User;
 import com.example.android.examproject.entities.UserInfo;
+import com.example.android.examproject.utils.UserInfoHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String NAME_TAG = "name";
     public static final String ADDRESS_TAG = "address";
     public static final String EMAIL_TAG = "email";
+
+    private static final String RETROFIT_BASE_URL ="https://randomuser.me/";
 
     UserListPresenter presenter;
 
@@ -49,7 +54,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = (RecyclerView) findViewById(R.id.studentRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        presenter = new UserListPresenter(this);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(RETROFIT_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService service = retrofit.create(RetrofitService.class);
+
+        presenter = new UserListPresenter(this, service, new UserInfoHelper(this));
     }
 
 //    for button click
@@ -65,17 +77,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void showErrorMessage(String error) {
-        Log.d(TAG, "onFailure: " + error);
-        Toast.makeText(this, "Error retreiving data.", Toast.LENGTH_SHORT).show();
+    public void showDataErrorMessage() {
+        Log.d(TAG, "onFailure: Error retrieving network data.");
+        Toast.makeText(this, "Error retrieving data.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showUserList(ArrayList<UserInfo> listInfo) {
+    public void showNetworkErrorMessage() {
+        Log.d(TAG, "onFailure: Error connecting to network.");
+        Toast.makeText(this, "Network error. Check internet settings", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showUserList(List<UserInfo> listInfo) {
         updateRecyclerAdapter(listInfo);
     }
 
-    private void updateRecyclerAdapter(ArrayList<UserInfo> list) {
+    private void updateRecyclerAdapter(List<UserInfo> list) {
         UserRecyclerAdapter recyclerAdapter = new UserRecyclerAdapter(list, this);
         recyclerAdapter.setListItemClickListener(this);
         recyclerView.setAdapter(recyclerAdapter);

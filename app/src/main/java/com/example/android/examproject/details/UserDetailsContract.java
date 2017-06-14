@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 public interface UserDetailsContract {
     interface View {
-        void SetUserData(String url, String name, String address, String email);
+        void DisplayUserData(String url, String name, String address, String email);
+
+        void ErrorDisplayingUserData();
     }
 
     interface Presenter {

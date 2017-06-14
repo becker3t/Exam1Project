@@ -19,8 +19,11 @@ public class DetailsPresenter implements UserDetailsContract.Presenter {
     @Override
     public void GetUserData(Bundle b) {
         if(b != null) {
-            view.SetUserData(b.getString(MainActivity.IMG_URL_TAG), b.getString(MainActivity.NAME_TAG),
+            view.DisplayUserData(b.getString(MainActivity.IMG_URL_TAG), b.getString(MainActivity.NAME_TAG),
                             b.getString(MainActivity.ADDRESS_TAG), b.getString(MainActivity.EMAIL_TAG));
+        }
+        else {
+            view.ErrorDisplayingUserData();
         }
     }
 }
