@@ -1,5 +1,6 @@
 package com.example.android.examproject.list;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.android.examproject.R;
+import com.example.android.examproject.details.DetailsActivity;
 import com.example.android.examproject.entities.Result;
 import com.example.android.examproject.entities.User;
 import com.example.android.examproject.entities.UserInfo;
@@ -21,9 +23,14 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, UserListContract.View{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, UserListContract.View, UserRecyclerAdapter.ListItemClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName() + "_TAG";
+
+    public static final String IMG_URL_TAG = "image_url";
+    public static final String NAME_TAG = "name";
+    public static final String ADDRESS_TAG = "address";
+    public static final String EMAIL_TAG = "email";
 
     UserListPresenter presenter;
 
@@ -45,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         presenter = new UserListPresenter(this);
     }
 
+//    for button click
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -69,38 +77,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateRecyclerAdapter(ArrayList<UserInfo> list) {
         UserRecyclerAdapter recyclerAdapter = new UserRecyclerAdapter(list, this);
+        recyclerAdapter.setListItemClickListener(this);
         recyclerView.setAdapter(recyclerAdapter);
-//        recyclerAdapter.notifyDataSetChanged();
     }
 
-//    private void PopulateUserList() {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(RETROFIT_BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        RetrofitService service = retrofit.create(RetrofitService.class);
-//        Call<User> call = service.getTwentyUsers();
-//        call.enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(retrofit2.Call<User> call, retrofit2.Response<User> response) {
-//                if(response.isSuccessful()) {
-//                    User example = response.body();
-//
-//                    for(Result r: example.getResults()) {
-//                        final String userName = helper.getNameString(r);
-//                        final String userAddress = helper.getAddressString(r);
-//                        final String userEmail = helper.getEmailString(r);
-//
-//                        listUserInfo.add(new UserInfo(userName, userAddress, userEmail));
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(retrofit2.Call<User> call, Throwable t) {
-//                //do stuff on failure
-//                Log.d(TAG, "onFailure: " + t.getMessage());
-//            }
-//        });
-//    }
+    //For list item click
+    @Override
+    public void OnItemClick(View v, int position) {
+//        Log.d(TAG, "OnItemClick: holy shit it works!!!!" + position);
+        Intent i = new Intent(MainActivity.this, DetailsActivity.class);
+        i.putExtras(presenter.getDataBundle(position));
+        startActivity(i);
+    }
 }

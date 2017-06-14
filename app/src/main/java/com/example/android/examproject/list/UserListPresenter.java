@@ -1,6 +1,8 @@
 package com.example.android.examproject.list;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 
 import com.example.android.examproject.entities.Result;
 import com.example.android.examproject.entities.User;
@@ -33,6 +35,15 @@ public class UserListPresenter implements UserListContract.Presenter{
         listUserInfo = new ArrayList<>();
     }
 
+    public Bundle getDataBundle (int position) {
+        Bundle myBundle = new Bundle();
+        myBundle.putString(MainActivity.IMG_URL_TAG, listUserInfo.get(position).getImageUrl());
+        myBundle.putString(MainActivity.NAME_TAG, listUserInfo.get(position).getName());
+        myBundle.putString(MainActivity.ADDRESS_TAG, listUserInfo.get(position).getAddress());
+        myBundle.putString(MainActivity.EMAIL_TAG, listUserInfo.get(position).getEmail());
+        return myBundle;
+    }
+
     @Override
     public void populateUserList() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -48,11 +59,12 @@ public class UserListPresenter implements UserListContract.Presenter{
                     User example = response.body();
 
                     for(Result r: example.getResults()) {
+                        final String userImgUrl = r.getPicture().getMedium();
                         final String userName = helper.getNameString(r);
                         final String userAddress = helper.getAddressString(r);
                         final String userEmail = helper.getEmailString(r);
 
-                        listUserInfo.add(new UserInfo(userName, userAddress, userEmail));
+                        listUserInfo.add(new UserInfo(userImgUrl, userName, userAddress, userEmail));
                     }
 
                     view.showUserList(listUserInfo);

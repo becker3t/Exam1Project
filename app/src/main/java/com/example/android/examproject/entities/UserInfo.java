@@ -6,11 +6,13 @@ package com.example.android.examproject.entities;
 
 public class UserInfo {
 
+    private String imageUrl;
     private String name;
     private String address;
     private String email;
 
-    public UserInfo(String name, String address, String email) {
+    public UserInfo(String image, String name, String address, String email) {
+        this.imageUrl = image;
         this.name = name;
         this.address = address;
         this.email = email;
@@ -38,5 +40,13 @@ public class UserInfo {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

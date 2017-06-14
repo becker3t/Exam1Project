@@ -1,7 +1,12 @@
 package com.example.android.examproject.list;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.android.examproject.R;
 import com.example.android.examproject.entities.Result;
 
